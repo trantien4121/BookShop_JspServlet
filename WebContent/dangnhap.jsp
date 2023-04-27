@@ -1,8 +1,10 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="bean.loaibean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bo.loaibo"%>
 <%@page import="bean.sachbean"%>
 <%@page import="bo.sachbo"%>
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -31,7 +33,7 @@
               <a class="nav-link ml-3" href="htgio.jsp" style="color: #fff"> <i class="fa fa-cart-plus" aria-hidden="true"></i> Giỏ hàng</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link ml-3" href="#" style="color: #fff"> <i class="fa fa-money" aria-hidden="true"></i> Thanh toán</a>
+                <a class="nav-link ml-3" href="hoadonservlet" style="color: #fff"> <i class="fa fa-money" aria-hidden="true"></i> Thanh toán</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link ml-3" href="#" style="color: #fff"> <i class="fa fa-history" aria-hidden="true"></i> Lịch sử mua</a>
@@ -39,7 +41,7 @@
           </ul>
           <ul class="navbar-nav mr-5">
             <li class="mr-3">
-                <a href="#" style="color: #fff; text-decoration: none;">
+                <a href="dangky.jsp" style="color: #fff; text-decoration: none;">
                    <i class="fa fa-user" aria-hidden="true"></i> Register
                 </a>
             </li>
@@ -53,20 +55,8 @@
     </nav>
 <table width="1200" align="center" class="mt-3">
    <tr>
-      <td width="200" valign="top"> <span style="font-weight: 700">Loại sách</span>
+      <td width="200" valign="top"> <span style="font-weight: 700"></span>
       	<table>
-      		<%loaibo lbo=new loaibo();
-        		ArrayList<loaibean> dsloai=lbo.getLoai();
-        		for(loaibean l: dsloai){
-      		%>
-          	<tr>
-           		<td>
-            		<a href="htsach.jsp?ml=<%=l.getMaloai()%>"> 
-              		<%=l.getTenloai() %>
-             		</a>
-          		</td>
-          </tr>
-          		<%} %>
        	</table>
        </td>
       <td width="800" valign="top"> 
@@ -96,7 +86,7 @@
                             		class="form-control" name="txtpass" placeholder="Password">
                       		</div>
                   		</div>
-                  		<div class="card-footer text-muted d-flex justify-content-end">
+                  		<div class="card-footer text-muted d-flex justify-content-center">
                       		<button class="btn btn-success" type="submit">Login</button>
                   		</div>
               		</div>
@@ -104,18 +94,16 @@
        		</div>
        			
        			
-       			<% if(request.getParameter("isLogin")!=null){
+       			<%-- <% if(request.getParameter("isLogin")!=null){
     	   			out.print("<center><b>Login Fail!</b></center>");
-       			} %>
+       			} %> --%>
+       			<c:if test="${isLogin ==0 }">
+					<center><b>Login Failed! lần ${dnFalse}</b></center> 			
+       			</c:if>
     		</form>
        	</table>
       </td>
-      <td width="200" valign="top"> <span style="font-weight: 700">Tìm kiếm</span>
-      	<form action="htsach.jsp" method="post" class="form-group pt-1">
- 		 <input  name="txttk" type="text" value="" placeholder="Nhập thông tin sách" class="form-control"><br>
-  		 <input name="butt" type="submit" value="Search" class="btn btn-success" style="margin-top: -10px">
-		</form>
-      	
+      <td width="200" valign="top"> <span style="font-weight: 700"></span>
       </td>
    </tr>
 

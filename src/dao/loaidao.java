@@ -32,7 +32,7 @@ public class loaidao {
 			e.printStackTrace();
 			return null;
 		}
-		
+	}
 		
 		/*ds.add(new loaibean("tin", "Công nghệ thông tin"));
 		ds.add(new loaibean("toan", "Toán kinh tế"));
@@ -40,5 +40,63 @@ public class loaidao {
 		ds.add(new loaibean("hoa", "Hóa hữu cơ"));
 		
 		return ds;*/	//Truoc khi key noi sql
-	}
+		
+		public boolean themLoai(String maloai, String tenloai) {
+			KetNoi kn = new KetNoi();
+			kn.KetNoi();
+			if (maloai.equals("") || tenloai.equals("") ) {
+				return false;
+			} else {
+//				String sql = "INSERT INTO DangNhap (TenDangNhap, MatKhau, Quyen)\n" +
+//						"vaLUES (?,?,?)";
+				String sql = "INSERT INTO loai(maloai, tenloai)\n" + "valUES (?,?)";
+				try {
+					PreparedStatement ps = kn.cn.prepareStatement(sql);
+					ps.setString(1, maloai);
+					ps.setString(2, tenloai);
+					return ps.executeUpdate() > 0;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return true;
+			}
+		}
+		public boolean xoaLoai(String maloai) {
+			KetNoi kn = new KetNoi();
+			kn.KetNoi();
+			if (maloai.equals("")) {
+				return false;
+			} else {
+				String sql = "DELETE FROM loai where maloai=?";
+				try {
+					PreparedStatement ps = kn.cn.prepareStatement(sql);
+					ps.setString(1, maloai);
+					return ps.executeUpdate() > 0;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return true;
+			}
+		}
+		
+		public boolean suaLoai(String maloaicu, String maloaimoi, String tenloai) {
+			KetNoi kn = new KetNoi();
+			kn.KetNoi();
+			if (maloaimoi.equals("") || tenloai.equals(" ")) {
+				return false;
+			} else {
+				String sql = "update loai\r\n"
+						+ "set maloai=?, tenloai=? where maloai =?";
+				try {
+					PreparedStatement ps = kn.cn.prepareStatement(sql);
+					ps.setString(1, maloaimoi);
+					ps.setString(2, tenloai);
+					ps.setString(3, maloaicu);
+					return ps.executeUpdate() > 0;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return true;
+			}
+		}
 }

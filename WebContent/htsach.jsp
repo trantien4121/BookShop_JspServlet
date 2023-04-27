@@ -5,6 +5,7 @@
 <%@page import="bean.sachbean"%>
 <%@page import="bo.sachbo"%>
 <%@page import="bo.giohangbo"%>
+<%@page import="bo.hoadonbo"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -58,7 +59,13 @@
               </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link ml-3" href="#" style="color: #fff"> <i class="fa fa-money" aria-hidden="true"></i> Thanh toán</a>
+                <a class="nav-link ml-3" href="hoadonservlet" style="color: #fff"> <i class="fa fa-money" aria-hidden="true"></i> Thanh toán</a>
+                 <% 
+              		hoadonbo hoadon=(hoadonbo)session.getAttribute("hoadon");
+              		if(session.getAttribute("hoadon")!=null && hoadon.ds.size()!=0){
+              	%>
+              		<span class="header__cart-notice"><%=hoadon.ds.size()%></span>
+              	<%} %>
             </li>
             <li class="nav-item">
                 <a class="nav-link ml-3" href="#" style="color: #fff"> <i class="fa fa-history" aria-hidden="true"></i> Lịch sử mua</a>

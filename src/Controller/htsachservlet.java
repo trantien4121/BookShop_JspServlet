@@ -50,10 +50,17 @@ public class htsachservlet extends HttpServlet {
   		
 
   		sachbo sbo = new sachbo();
+  		
   		int sachBegin;
   		String tranght="";
   		ArrayList<sachbean> dssach;
-  		if(request.getParameter("page")==null) {
+  		
+  		if( request.getParameter("ml")!=null || request.getParameter("txttk")!=null) {
+  			tranght = "1";
+  			dssach = sbo.getSach();
+  		}
+  		else if(request.getParameter("page")==null && request.getParameter("ml")==null) {
+  			tranght = "1";
   			sachBegin =0;
   			dssach = sbo.getSach(sachBegin, 9);
   		}
@@ -69,17 +76,20 @@ public class htsachservlet extends HttpServlet {
   		request.setAttribute("TotalPage", 20);
   		
   		
+  		//ArrayList<sachbean> dssach = sbo.getSach();
+  			
   		String ml = request.getParameter("ml");
   		String key = request.getParameter("txttk");
   		if (ml != null) 
   			dssach = sbo.TimMa(ml);
+  			
   		else  if (key != null)
   			dssach = sbo.Tim(key);
   		
   		request.setAttribute("dssach", dssach);
   		
   		
-		RequestDispatcher rd = request.getRequestDispatcher("htsach1.jsp");	///de test //truoc la htsach.jsp
+		RequestDispatcher rd = request.getRequestDispatcher("htsach2.jsp");	///de test //truoc la htsach.jsp
 		rd.forward(request, response);
 	}
 

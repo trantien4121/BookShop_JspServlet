@@ -12,6 +12,10 @@ public class sachbo {
 		ds = sdao.getSach(start, num);
 		return ds;
 	}
+	public ArrayList<sachbean> getSach(){
+		ds = sdao.getSach();
+		return ds;
+	}
 	
 	 public ArrayList<sachbean> TimMa(String maloai){
 		   ArrayList<sachbean> tam= new ArrayList<sachbean>();
@@ -31,5 +35,15 @@ public class sachbo {
 				   tam.add(s);
 		   return tam;
 	   }
+	   
+	  public ArrayList<sachbean> SeachInPage(int page, String maloai){
+		  ArrayList<sachbean> tam = new ArrayList<sachbean>();
+		  ArrayList<sachbean> dssach = getSach((page-1)*9, 9);
+		  for (sachbean s: dssach) {
+			  if(s.getMaloai().equals(maloai))
+				   tam.add(s);
+		  }
+		  return tam;
+	  }
 
 }

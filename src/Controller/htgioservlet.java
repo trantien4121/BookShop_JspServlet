@@ -67,13 +67,15 @@ public class htgioservlet extends HttpServlet {
 		}		
 		// Ket Thu Hanh Dong Xoa sua
 
+			
+		
 		if(gh!=null) {
 			if(gh.ds.size()!=0) {
 				//Hiển thị hàng ra giỏ
 				RequestDispatcher rd = request.getRequestDispatcher("htgio.jsp");
 				rd.forward(request, response);
 			}
-			else{
+			else {
 				//Nếu giỏ hàng không có sản phẩm thì chuyển về htsachservlet
 				response.sendRedirect("htsachservlet");
 			}

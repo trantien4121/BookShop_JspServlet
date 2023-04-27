@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,7 +37,7 @@ public class ktdnservlet extends HttpServlet {
 		if (un!=null && pass!=null) {
 			DangNhapdao DN = new DangNhapdao();
 			try {
-				if (DN.KtDangNhap(un, pass)==true){	//Dang nhap dung
+				if (DN.KtDangNhap(un, pass)==true || DN.KtDangNhapMD5(un, pass)==true){	//Dang nhap dung
 					//Tao doi tuong session
 					HttpSession session = request.getSession();
 					session.setAttribute("dn", un);
@@ -45,8 +46,15 @@ public class ktdnservlet extends HttpServlet {
 //				rd.forward(request, response);	 Code cũ thầy
 					response.sendRedirect("htsachservlet");
 				} else {	//Dang nhap sai
+					//int i=1;
 					RequestDispatcher rd = request.getRequestDispatcher("dangnhap.jsp?isLogin=false");
+					HttpSession session = request.getSession();
+					
+					request.setAttribute("isLogin", 0);
+					//session.setAttribute("dnFalse", i);
+					//System.out.println(i);
 					rd.forward(request, response);
+					//i++;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -5,6 +5,9 @@
 <%@page import="bean.sachbean"%>
 <%@page import="bo.sachbo"%>
 <%@page import="bo.giohangbo"%>
+<%@page import="bo.hoadonbo"%>
+<%@page import="dao.hoadondao"%>
+<%@page import="dao.DangNhapdao"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -67,10 +70,45 @@
               </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link ml-3" href="#" style="color: #fff"> <i class="fa fa-money" aria-hidden="true"></i> Thanh toán</a>
+                <a class="nav-link ml-3" href="htthanhtoanservlet" style="color: #fff"> <i class="fa fa-money mr-2" aria-hidden="true"></i> Thanh toán</a>
+                <% 
+              			
+              		hoadondao hd = new hoadondao();
+              		int soHoaDon = 0;
+              		String tendn="";
+              		if(session.getAttribute("dn")!=null){
+              			tendn = session.getAttribute("dn").toString();
+              			DangNhapdao dnha = new DangNhapdao();
+                  		
+                  		int makh = dnha.getMakh(tendn);
+                  		
+                  		soHoaDon = hd.getTongHoaDon(makh);
+              		}
+              		
+              		if(soHoaDon!=0){
+              			
+              	%>
+              		<span class="header__cart-notice"><%=soHoaDon%></span>
+              	<%} %>
             </li>
             <li class="nav-item">
-                <a class="nav-link ml-3" href="#" style="color: #fff"> <i class="fa fa-history" aria-hidden="true"></i> Lịch sử mua</a>
+                <a class="nav-link ml-3" href="htlichsumuahangservlet" style="color: #fff"> <i class="fa fa-history" aria-hidden="true"></i> Lịch sử mua</a>
+                 <% 
+                	int soLsMua = 0;
+              		if(session.getAttribute("dn")!=null){
+              			tendn = session.getAttribute("dn").toString();
+              			DangNhapdao dnha = new DangNhapdao();
+                  		
+                  		int makh = dnha.getMakh(tendn);
+                  		
+                  		soLsMua = hd.getTongLichSuMua(makh);
+              		}
+              		
+              		if(soLsMua!=0){
+              			
+              	%>
+              		<span class="header__cart-notice"><%=soLsMua%></span>
+              	<%} %>
               </li>
           </ul>
           <ul class="navbar-nav mr-5">
@@ -79,7 +117,7 @@
                    <i class="fa fa-user" aria-hidden="true"></i> Register
                 </a>	-->
                 <%if(session.getAttribute("dn")==null){ %>
-                <a href="#" style="color: #fff;text-decoration: none;">
+                <a href="dangkyservlet" style="color: #fff;text-decoration: none;">
                    <i class="fa fa-user" aria-hidden="true"></i> Register
                 </a>
                 <%}%>
@@ -124,9 +162,11 @@
           	<c:forEach var="l" items="${dsloai}">
           	<tr>
            		<td>
-            		<a href="htsachservlet?ml=${l.getMaloai()}">
+            		<div class="loaisach">
+            			<a href="htsachservlet?ml=${l.getMaloai()}" style="text-decoration: none">
              			${l.getTenloai()}
-             		</a> 
+             		</a>
+            		</div> 
           		</td>
           	</tr>
           	</c:forEach>
@@ -226,12 +266,7 @@
 					<a class="page-link" href="htsachservlet?page=${i}">${i}</a>
 				</li>
 			</c:forEach>
-				<%-- <c:choose>
-					<c:when test="${TotalPage > 5}">
-						<a  class="page-link" href="htsachservlet?page=${i+1}"> >> </a>
-					</c:when>
-				</c:choose> --%>
-			</ul>
+		</ul>
 	</c:when>
 	<c:otherwise>
 	
